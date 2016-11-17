@@ -1,13 +1,10 @@
 language: node_js
 node_js:
-- '6'
-before_deploy:
-- echo 'before-deploy:'
-- npm run build
-- echo src
-- ls -lR src
-- echo dist
-- ls -lR dist
+- node
+services:
+- mongodb
+before_script:
+- sleep 15
 deploy:
   provider: npm
   email: anthony.kerz@gmail.com
