@@ -65,7 +65,7 @@ test('initFixture', async (t)=>{
   const docs = [{_id: 'foo'}, {_id: 'bar'}]
   await bulkInsert({db, docs, collectionName})
   await initFixture({db, docs, collectionName})
-  const result = await db.collection(collectionName).find().toArray()
+  const result = await db.collection(collectionName).find().sort({_id: -1}).toArray()
   t.deepEqual(result, docs)
 })
 
