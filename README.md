@@ -1,6 +1,6 @@
 # node-mongo-test-helpr
 
-miscellaneous test helper functions
+miscellaneous mongo test helper functions
 
 > see [tests](test) for examples
 
