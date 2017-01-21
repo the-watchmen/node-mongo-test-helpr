@@ -1,6 +1,6 @@
 {
   "name": "mongo-test-helpr",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "dist/index.js",
   "repository": "https://github.com/tony-kerz/node-mongo-test-helpr.git",
