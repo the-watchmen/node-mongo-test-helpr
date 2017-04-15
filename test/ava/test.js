@@ -14,10 +14,9 @@ import {
 
 async function getDb() {
   const host = config.get('mongo.host')
-  const port = config.get('mongo.port')
   const dbName = config.get('mongo.db')
   // dbg('get-db: host=%o, port=%o, db=%o', host, port, dbName)
-  const db = await mongodb.MongoClient.connect(`mongodb://${host}:${port}/${dbName}`)
+  const db = await mongodb.MongoClient.connect(`mongodb://${host}/${dbName}`)
   assert(db)
   return db
 }
