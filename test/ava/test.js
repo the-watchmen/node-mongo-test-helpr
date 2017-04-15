@@ -1,6 +1,5 @@
-import test from 'ava'
 import assert from 'assert'
-//import debug from 'debug'
+import test from 'ava'
 import config from 'config'
 import mongodb from 'mongodb'
 import {
@@ -13,43 +12,42 @@ import {
   isObjectId
 } from '../../src'
 
-//const dbg = debug('test:mongo-test-helpr')
-
 async function getDb() {
   const host = config.get('mongo.host')
-  const port = config.get('mongo.port')
   const dbName = config.get('mongo.db')
-  //dbg('get-db: host=%o, port=%o, db=%o', host, port, dbName)
-  const db = await mongodb.MongoClient.connect(`mongodb://${host}:${port}/${dbName}`)
+  // dbg('get-db: host=%o, port=%o, db=%o', host, port, dbName)
+  const db = await mongodb.MongoClient.connect(`mongodb://${host}/${dbName}`)
   assert(db)
   return db
 }
 
-test('dbName', async (t)=>{
+test('dbName', async t => {
   const db = await getDb()
   t.is(dbName(db), config.get('mongo.db'))
 })
 
-test('isAutomatedTest', async (t)=>{
+test('isAutomatedTest', async t => {
   const db = await getDb()
   t.truthy(isAutomatedTest(db))
 })
 
-test('assertAutomatedTest', async (t)=>{
+test('assertAutomatedTest', async t => {
   const db = await getDb()
-  t.notThrows(()=>{assertAutomatedTest(db)})
+  t.notThrows(() => {
+    assertAutomatedTest(db)
+  })
 })
 
-test('initDb', async (t)=>{
+test('initDb', async t => {
   const db = await getDb()
   t.notThrows(initDb(db))
 })
 
-test('initDb: assert', (t)=>{
+test('initDb: assert', t => {
   t.throws(initDb({databaseName: 'nope'}))
 })
 
-test('bulkInsert', async (t)=>{
+test('bulkInsert', async t => {
   const db = await getDb()
   const collectionName = 'scratch'
   const docs = [{_id: 'foo'}, {_id: 'bar'}]
@@ -58,9 +56,9 @@ test('bulkInsert', async (t)=>{
   t.deepEqual(result, docs)
 })
 
-test('initFixture', async (t)=>{
+test('initFixture', async t => {
   const db = await getDb()
-  await(initDb(db))
+  await (initDb(db))
   const collectionName = 'scratch'
   const docs = [{_id: 'foo'}, {_id: 'bar'}]
   await bulkInsert({db, docs, collectionName})
@@ -69,6 +67,6 @@ test('initFixture', async (t)=>{
   t.deepEqual(result, docs)
 })
 
-test('isObjectId', (t)=>{
+test('isObjectId', t => {
   t.truthy(isObjectId(new mongodb.ObjectID()))
 })
