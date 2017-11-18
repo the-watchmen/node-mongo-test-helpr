@@ -40,11 +40,11 @@ test('assertAutomatedTest', async t => {
 
 test('initDb', async t => {
   const db = await getDb()
-  t.notThrows(initDb(db))
+  await t.notThrows(initDb(db))
 })
 
-test('initDb: assert', t => {
-  t.throws(initDb({databaseName: 'nope'}))
+test('initDb: assert', async t => {
+  await t.throws(initDb({databaseName: 'nope'}))
 })
 
 test('bulkInsert', async t => {
@@ -52,18 +52,25 @@ test('bulkInsert', async t => {
   const collectionName = 'scratch'
   const docs = [{_id: 'foo'}, {_id: 'bar'}]
   await bulkInsert({db, docs, collectionName})
-  const result = await db.collection(collectionName).find().toArray()
+  const result = await db
+    .collection(collectionName)
+    .find()
+    .toArray()
   t.deepEqual(result, docs)
 })
 
 test('initFixture', async t => {
   const db = await getDb()
-  await (initDb(db))
+  await initDb(db)
   const collectionName = 'scratch'
   const docs = [{_id: 'foo'}, {_id: 'bar'}]
   await bulkInsert({db, docs, collectionName})
   await initFixture({db, docs, collectionName})
-  const result = await db.collection(collectionName).find().sort({_id: -1}).toArray()
+  const result = await db
+    .collection(collectionName)
+    .find()
+    .sort({_id: -1})
+    .toArray()
   t.deepEqual(result, docs)
 })
 
