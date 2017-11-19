@@ -1,6 +1,6 @@
 {
   "name": "@watchmen/mongo-test-helpr",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "",
   "main": "dist/index.js",
   "repository": "the-watchmen/node-mongo-test-helpr",
