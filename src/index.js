@@ -4,7 +4,7 @@ import debug from 'debug'
 import mongodb from 'mongodb'
 import _ from 'lodash'
 
-const dbg = debug('app:mongo-test-helpr')
+const dbg = debug('lib:mongo-test-helpr')
 
 const autoSuffix = _.get(config, 'mongo.autoSuffix', '-auto')
 

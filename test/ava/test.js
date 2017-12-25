@@ -1,5 +1,6 @@
 import assert from 'assert'
 import test from 'ava'
+import debug from 'debug'
 import config from 'config'
 import mongodb from 'mongodb'
 import {
@@ -12,12 +13,17 @@ import {
   isObjectId
 } from '../../src'
 
+const dbg = debug('test:mongo-test-helpr')
+dbg('config=%o', config)
+
 async function getDb() {
   const host = config.get('mongo.host')
   const dbName = config.get('mongo.db')
   // dbg('get-db: host=%o, port=%o, db=%o', host, port, dbName)
-  const db = await mongodb.MongoClient.connect(`mongodb://${host}/${dbName}`)
-  assert(db)
+  const client = await mongodb.MongoClient.connect(`mongodb://${host}/${dbName}`)
+  assert(client, 'client required')
+  const db = client.db(dbName)
+  assert(db, 'db required')
   return db
 }
 
